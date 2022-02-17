@@ -19,7 +19,7 @@ def make_generator(config, device=torch.device("cuda")):
         with torch.no_grad():
             generator1.eval()
             generator2.eval()
-            generated_img_1 = generator1(batch["condition_img"], batch["target_bone"])
+            generated_img_1 = generator1(batch["condition_img"], batch["target_bone"], batch["target_mask2"])
             generated_img = generator2(batch["condition_img"], generated_img_1) + generated_img_1
             return generated_img
 
