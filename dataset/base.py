@@ -22,12 +22,14 @@ def wrap_dict_name(d, prefix):
 
 
 class BoneDataset(Dataset):
-    def __init__(self, image_folder, bone_folder, mask_folder, annotations_file_path,
+    print(1)
+    def __init__(self, image_folder, bone_folder, mask_folder, mask2_folder, annotations_file_path,
                  exclude_fields=None, flip_rate=0.0, loader=default_loader, transform=DEFAULT_TRANS):
+        print(1)
         self.image_folder = image_folder
         self.bone_folder = bone_folder
         self.mask_folder = mask_folder
-
+        self.mask2_folder = mask2_folder
         self.flip_rate = flip_rate
         self.use_flip = self.flip_rate > 0.0
 
@@ -85,12 +87,27 @@ class BoneDataset(Dataset):
             img = img.flip(dims=[-1])
         return img
 
+    def load_mask2_data(self, path, flip=False):
+        try:
+            mask2 = self.loader(os.path.join(self.mask2_folder, path))
+        except FileNotFoundError as e:
+            print(path)
+            raise e
+
+        if self.transform is not None:
+            mask2 = self.transform(mask2)
+        if flip:
+            mask2 = mask2.flip(dims=[-1])
+        return mask2
+
     def prepare_item(self, image_name):
         flip = torch.rand(1).item() < self.flip_rate if self.use_flip else False
 
         item = {"path": image_name}
         if "img" not in self.exclude_fields:
             item["img"] = self.load_image_data(image_name, flip)
+        if "mask2" not in self.exclude_fields:
+            item["mask2"] = self.load_mask2_data(image_name, flip)
         if "bone" not in self.exclude_fields:
             item["bone"] = self.load_bone_data(self.bone_folder, image_name, flip)
         if "mask" not in self.exclude_fields:

@@ -15,7 +15,7 @@ from .model import Generator1
 
 def get_trainer(config, device=torch.device("cuda")):
     cfg = config["model"]["generator1"]
-    generator1 = Generator1(3 + 18, cfg["num_repeat"], cfg["middle_features_dim"],
+    generator1 = Generator1(4 + 18, cfg["num_repeat"], cfg["middle_features_dim"],
                             cfg["channels_base"], cfg["image_size"])
     generator1.to(device)
     print(generator1)
@@ -29,7 +29,7 @@ def get_trainer(config, device=torch.device("cuda")):
 
     def _step(engine, batch):
         batch = convert_tensor(batch, device)
-        generated_img = generator1(batch["condition_img"], batch["target_bone"])
+        generated_img = generator1(batch["condition_img"], batch["target_mask2"], batch["target_bone"])
 
         generator1_optimizer.zero_grad()
         loss = mask_l1_loss(generated_img, batch["target_img"], batch["target_mask"])
@@ -88,8 +88,8 @@ def get_trainer(config, device=torch.device("cuda")):
         tb_writer.add_image('Train/image', make_2d_grid(engine.state.output["img"].values()), engine.state.iteration)
         with torch.no_grad():
             generator1.eval()
-            generated_img_1 = generator1(val_data_pair["condition_img"], val_data_pair["target_bone"])
-            output_imgs = [val_data_pair["target_mask"], val_data_pair["condition_img"],
+            generated_img_1 = generator1(val_data_pair["condition_img"], val_data_pair["target_bone"], val_data_pair["target_mask2"])
+            output_imgs = [val_data_pair["target_mask"], val_data_pair["target_mask2"], val_data_pair["condition_img"],
                            val_data_pair["target_img"], generated_img_1]
             tb_writer.add_image('Test/image', make_2d_grid(output_imgs), engine.state.iteration)
             generator1.train()
