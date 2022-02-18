@@ -12,7 +12,7 @@ first try
         bone = "./data/market/train/pose_map_image/"
         mask = "./data/market/train/pose_mask_image/"
         pair = "./data/market/pairs-train.csv"
-        maskpair ="./data/market/market-mask-train.csv"
+        mask2pair ="./data/market/market-mask-train.csv"
         annotation = "./data/market/annotation-train.csv"
     [dataset.path.test]
         image = "./data/Market-1501-v15.09.15/bounding_box_test/"
@@ -20,7 +20,7 @@ first try
         bone = "./data/market/test/pose_map_image/"
         mask = "./data/market/test/pose_mask_image/"
         pair = "./data/market/pairs-test.csv"
-        maskpair ="./data/market/market-mask-test.csv"
+        mask2pair ="./data/market/market-mask-test.csv"
         annotation = "./data/market/annotation-test.csv"
 
 [loss]

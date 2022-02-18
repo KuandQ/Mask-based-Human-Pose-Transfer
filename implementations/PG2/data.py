@@ -5,8 +5,9 @@ import dataset
 
 def get_data_loader(config):
     cfg = config["dataset"]["path"]["train"]
-    image_dataset = dataset.PairBoneDataset(cfg["pair"], cfg["image"], cfg["bone"], cfg["mask"], cfg["annotation"], cfg["mask2"], cfg["maskpair"],
-                                        flip_rate=config["train"]["data"]["flip_rate"])
+    image_dataset = dataset.PairBoneDataset(cfg["pair"], cfg["mask2pair"], cfg["image"], cfg["bone"], cfg["mask"],
+                                            cfg["annotation"], cfg["mask2"],
+                                            flip_rate=config["train"]["data"]["flip_rate"])
     image_loader = DataLoader(image_dataset, batch_size=config["train"]["batch_size"],
                               num_workers=8, pin_memory=True, drop_last=True,
                               sampler=RandomSampler(image_dataset, replacement=config["train"]["data"]["replacement"]))
@@ -16,7 +17,8 @@ def get_data_loader(config):
 
 def get_val_data_pairs(config):
     cfg = config["dataset"]["path"]["test"]
-    image_dataset = dataset.PairBoneDataset(cfg["pair"], cfg["image"], cfg["bone"], cfg["mask"], cfg["annotation"], cfg["mask2"], cfg["maskpair"])
+    image_dataset = dataset.PairBoneDataset(cfg["pair"], cfg["mask2pair"], cfg["image"], cfg["bone"], cfg["mask"],
+                                            cfg["annotation"], cfg["mask2"])
     dl = DataLoader(
         image_dataset, num_workers=1,
         batch_size=config["log"]["verify"]["batch_size"],

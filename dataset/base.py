@@ -22,10 +22,8 @@ def wrap_dict_name(d, prefix):
 
 
 class BoneDataset(Dataset):
-    print(1)
-    def __init__(self, image_folder, bone_folder, mask_folder, mask2_folder, annotations_file_path,
+    def __init__(self, image_folder, bone_folder, mask_folder, annotations_file_path, mask2_folder,
                  exclude_fields=None, flip_rate=0.0, loader=default_loader, transform=DEFAULT_TRANS):
-        print(1)
         self.image_folder = image_folder
         self.bone_folder = bone_folder
         self.mask_folder = mask_folder
