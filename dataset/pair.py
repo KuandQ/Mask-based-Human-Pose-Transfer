@@ -5,6 +5,14 @@ from .base import BoneDataset, wrap_dict_name
 
 
 class PairBoneDataset(BoneDataset):
+
+    def __init__(self, pair_list_path, mask2pair_list_path, *nargs, **kwargs):
+        super().__init__(*nargs, **kwargs)
+        self.pair_list_path = pair_list_path
+        self.mask2pair_list_path = mask2pair_list_path
+        self.pairs = self.load_pair_list(pair_list_path)
+        self.mask2pairs = self.load_mask2pair_list(mask2pair_list_path)
+
     @staticmethod
     def load_pair_list(pair_list_path):
         assert os.path.isfile(pair_list_path)
@@ -14,30 +22,25 @@ class PairBoneDataset(BoneDataset):
             pair_list = [tuple(item) for item in f_csv]
             return pair_list
 
-    def load_maskpair_list(maskpair_list_path):
-        assert os.path.isfile(maskpair_list_path)
-        with open(maskpair_list_path, "r") as f:
+    @staticmethod
+    def load_mask2pair_list(mask2pair_list_path):
+        assert os.path.isfile(mask2pair_list_path)
+        with open(mask2pair_list_path, "r") as f:
             f_csv = csv.reader(f)
             next(f_csv)
-            maskpair_list = [tuple(item) for item in f_csv]
-            return maskpair_list
+            mask2pair_list = [tuple(item) for item in f_csv]
+            return mask2pair_list
 
-    def __init__(self, pair_list_path, maskpair_list_path, *nargs, **kwargs):
-        super().__init__(*nargs, **kwargs)
-        self.pair_list_path = pair_list_path
-        self.maskpair_list_path = maskpair_list_path
-        self.pairs = self.load_pair_list(pair_list_path)
-        self.maskpairs = self.load_maskpair_list(maskpair_list_path)
 
     def __getitem__(self, input_idx):
         img_p1_name, img_p2_name = self.pairs[input_idx]
-        img_m1_name, img_m2_name = self.maskpairs[input_idx]
+        mask2_p1_name, mask2_p2_name = self.mask2pairs[input_idx]
 
         pair = wrap_dict_name(self.prepare_item(img_p1_name), "condition_")
         pair.update(wrap_dict_name(self.prepare_item(img_p2_name), "target_"))
 
-        maskpair = wrap_dict_name(self.prepare_item(img_m1_name), "condition_")
-        maskpair.update(wrap_dict_name(self.prepare_item(img_m2_name), "target_"))
+        mask2pair = wrap_dict_name(self.prepare_item(mask2_p1_name), "condition_")
+        mask2pair.update(wrap_dict_name(self.prepare_item(mask2_p2_name), "target_"))
 
         return pair
 
@@ -54,8 +57,8 @@ class PairBoneDataset(BoneDataset):
     mask_folder: {}
     mask2_folder: {}
     pair_list_path: {}
-    maskpair_list_path: {}
+    mask2pair_list_path: {}
 )
     transform: {}
     """.format(self.__class__, len(self), self.flip_rate, self.image_folder,
-               self.bone_folder, self.mask_folder, self.mask2_folder, self.pair_list_path, self.maskpair_list_path, self.transform)
+               self.bone_folder, self.mask_folder, self.mask2_folder, self.pair_list_path, self.mask2pair_list_path, self.transform)
