@@ -4,6 +4,8 @@ import os
 
 import numpy
 import torch
+import cv2
+
 from torch.utils.data import Dataset
 from torchvision import transforms
 from torchvision.datasets.folder import default_loader
@@ -22,16 +24,16 @@ def wrap_dict_name(d, prefix):
 
 
 class BoneDataset(Dataset):
-    print(1)
-    def __init__(self, image_folder, bone_folder, mask_folder, mask2_folder, annotations_file_path,
+    def __init__(self, image_folder, bone_folder, mask_folder, annotations_file_path, mask2_folder,
                  exclude_fields=None, flip_rate=0.0, loader=default_loader, transform=DEFAULT_TRANS):
-        print(1)
         self.image_folder = image_folder
         self.bone_folder = bone_folder
         self.mask_folder = mask_folder
         self.mask2_folder = mask2_folder
         self.flip_rate = flip_rate
         self.use_flip = self.flip_rate > 0.0
+
+
 
         self.exclude_fields = [] if exclude_fields is None else exclude_fields
 
@@ -87,15 +89,11 @@ class BoneDataset(Dataset):
             img = img.flip(dims=[-1])
         return img
 
-    def load_mask2_data(self, path, flip=False):
-        try:
-            mask2 = self.loader(os.path.join(self.mask2_folder, path))
-        except FileNotFoundError as e:
-            print(path)
-            raise e
+    @staticmethod
+    def load_mask2_data(mask2_folder, img_name, flip=False):
 
-        if self.transform is not None:
-            mask2 = self.transform(mask2)
+        mask2 = cv2.imread(os.path.join(mask2_folder, str(img_name) + "png"), cv2.IMREAD_UNCHANGED)
+
         if flip:
             mask2 = mask2.flip(dims=[-1])
         return mask2
@@ -107,7 +105,7 @@ class BoneDataset(Dataset):
         if "img" not in self.exclude_fields:
             item["img"] = self.load_image_data(image_name, flip)
         if "mask2" not in self.exclude_fields:
-            item["mask2"] = self.load_mask2_data(image_name, flip)
+            item["mask2"] = self.load_mask2_data(self.mask2_folder, image_name, flip)
         if "bone" not in self.exclude_fields:
             item["bone"] = self.load_bone_data(self.bone_folder, image_name, flip)
         if "mask" not in self.exclude_fields:
