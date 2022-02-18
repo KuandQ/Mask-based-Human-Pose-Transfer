@@ -4,6 +4,7 @@ import os
 
 import numpy
 import torch
+import cv2
 from torch.utils.data import Dataset
 from torchvision import transforms
 from torchvision.datasets.folder import default_loader
@@ -86,14 +87,8 @@ class BoneDataset(Dataset):
         return img
 
     def load_mask2_data(self, path, flip=False):
-        try:
-            mask2 = self.loader(os.path.join(self.mask2_folder, path))
-        except FileNotFoundError as e:
-            print(path)
-            raise e
 
-        if self.transform is not None:
-            mask2 = self.transform(mask2)
+        mask2 = cv2.imread(os.path.join(self.mask2_folder, path))
         if flip:
             mask2 = mask2.flip(dims=[-1])
         return mask2
