@@ -131,7 +131,7 @@ train stage 1: `./run.py PG2-1 --gpu_id 0 -c ./implementations/PG2/stage1.toml -
 
 train stage 2: `./run.py PG2-2 -g 0 -c ./implementations/PG2/stage2.toml -o ./checkpoints/PG2-2`
 
-generate images: `./run.py PG2-Generator -c ./implementations/PG2/stage2.toml -o ./generated_images -g 3`
+generate images: `./run.py PG2-Generator -c ./implementations/PG2/stage2.toml -o ./generated_images -g 0`
 
 generate a grid image as example: `python tool/generate_grid.py -r ./generated_images -o images.jpg`
 
