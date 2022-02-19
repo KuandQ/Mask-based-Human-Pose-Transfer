@@ -19,7 +19,7 @@ IMPLEMENTED_GENERATOR = {
 
 def get_data_loader(config):
     cfg = config["dataset"]["path"]["test"]
-    image_dataset = dataset.PairBoneDataset(cfg["pair"], cfg["image"], cfg["bone"], cfg["mask"], cfg["annotation"], cfg["mask2"], cfg["maskpair"])
+    image_dataset = dataset.PairBoneDataset(cfg["pair"], cfg["image"], cfg["bone"], cfg["mask"], cfg["annotation"], cfg["mask2"])
     if "generated_limit" in config:
         image_dataset = Subset(image_dataset, range(config["generated_limit"]))
     image_loader = DataLoader(image_dataset, batch_size=config["train"]["batch_size"],

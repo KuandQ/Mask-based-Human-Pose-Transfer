@@ -8,19 +8,21 @@ first try
     name = "market"
     [dataset.path.train]
         image = "./data/Market-1501-v15.09.15/bounding_box_train/"
-        mask2 = "./data/market1501-mask/bounding_box_train_seg/"
+        mask2 = "./new_market1501-mask/bounding_box_train_seg/"
+    #   mask2 = "./data/market1501-mask/bounding_box_train_seg/"
         bone = "./data/market/train/pose_map_image/"
         mask = "./data/market/train/pose_mask_image/"
         pair = "./data/market/pairs-train.csv"
-        mask2pair ="./data/market/market-mask-train.csv"
+    #  mask2pair ="./data/market/market-mask-train.csv"
         annotation = "./data/market/annotation-train.csv"
     [dataset.path.test]
         image = "./data/Market-1501-v15.09.15/bounding_box_test/"
-        mask2 = "./data/market1501-mask/bounding_box_test_seg/"
+        mask2 = "./new_market1501-mask/bounding_box_test_seg/"
+    #   mask2 = "./data/market1501-mask/bounding_box_test_seg/"
         bone = "./data/market/test/pose_map_image/"
         mask = "./data/market/test/pose_mask_image/"
         pair = "./data/market/pairs-test.csv"
-        mask2pair ="./data/market/market-mask-test.csv"
+    #   mask2pair ="./data/market/market-mask-test.csv"
         annotation = "./data/market/annotation-test.csv"
 
 [loss]
@@ -36,7 +38,7 @@ first try
         image_size = [128, 64]
 
 [train]
-    batch_size = 16
+    batch_size = 8
     num_epoch = 2
     [train.data]
         replacement = false

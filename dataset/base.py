@@ -5,8 +5,9 @@ import os
 import numpy
 import torch
 import cv2
+from PIL import Image
 from torch.utils.data import Dataset
-from torchvision import transforms
+import torchvision.transforms as transforms
 from torchvision.datasets.folder import default_loader
 
 DEFAULT_TRANS = transforms.Compose([
@@ -86,11 +87,14 @@ class BoneDataset(Dataset):
             img = img.flip(dims=[-1])
         return img
 
-    def load_mask2_data(self, path, flip=False):
-
-        mask2 = cv2.imread(os.path.join(self.mask2_folder, path))
+    @staticmethod
+    def load_mask2_data(mask2_folder, img_name, flip=False):
+        mask2 = Image.open(os.path.join(mask2_folder, img_name)).convert('L')
+        trans = transforms.Compose([transforms.ToTensor(), ])
+        mask2 = trans(mask2)
         if flip:
             mask2 = mask2.flip(dims=[-1])
+    #   mask2 = mask2.unsqueeze(0).expand(3, -1, -1)
         return mask2
 
     def prepare_item(self, image_name):
@@ -100,7 +104,7 @@ class BoneDataset(Dataset):
         if "img" not in self.exclude_fields:
             item["img"] = self.load_image_data(image_name, flip)
         if "mask2" not in self.exclude_fields:
-            item["mask2"] = self.load_mask2_data(image_name, flip)
+            item["mask2"] = self.load_mask2_data(self.mask2_folder, image_name, flip)
         if "bone" not in self.exclude_fields:
             item["bone"] = self.load_bone_data(self.bone_folder, image_name, flip)
         if "mask" not in self.exclude_fields:

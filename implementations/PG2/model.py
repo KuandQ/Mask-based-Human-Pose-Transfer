@@ -106,9 +106,10 @@ class Generator1(nn.Module):
         """
         return int(image_size[0] / (2 ** (num_repeat - 1))), int(image_size[1] / (2 ** (num_repeat - 1)))
 
-    def forward(self, condition_img, target_pose):
+    def forward(self, condition_img, target_mask2, target_pose):
         x = torch.cat([condition_img, target_pose], dim=1)
-        x = self.start_conv(x)
+        y = torch.cat([x, target_mask2], dim=1)
+        x = self.start_conv(y)
 
         skip_connection_list = []
         for i, block in enumerate(self.encoder):
