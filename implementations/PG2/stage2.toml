@@ -9,12 +9,14 @@ first try
     [dataset.path.train]
         image = "./data/Market-1501-v15.09.15/bounding_box_train/"
         bone = "./data/market/train/pose_map_image/"
+        mask2 = "./new_market1501-mask/bounding_box_train_seg/"
         mask = "./data/market/train/pose_mask_image/"
         pair = "./data/market/pairs-train.csv"
         annotation = "./data/market/annotation-train.csv"
     [dataset.path.test]
         image = "./data/Market-1501-v15.09.15/bounding_box_test/"
         bone = "./data/market/test/pose_map_image/"
+        mask2 = "./new_market1501-mask/bounding_box_test_seg/"
         mask = "./data/market/test/pose_mask_image/"
         pair = "./data/market/pairs-test.csv"
         annotation = "./data/market/annotation-test.csv"
@@ -33,14 +35,14 @@ first try
         channels_base = 128
         image_size = [128, 64]
         # select the G1 path
-        pretrained_path = "./checkpoints/PG2-1/network_G1_22000.pth"
+        pretrained_path = "./checkpoints/PG2-1/network_G1_55000.pth"
     [model.generator2]
         weight_init_way = "xavier"
         num_skip_out_connect = 1
         num_repeat = 3
         channels_base = 128
         # only used when generating images.
-        pretrained_path = "./checkpoints/PG2-2/network_G2_14000.pth"
+        pretrained_path = "./checkpoints/PG2-2/network_G2_29000.pth"
     [model.discriminator]
         # tflib means the way used in author of paper's code.
         weight_init_way = "tflib"

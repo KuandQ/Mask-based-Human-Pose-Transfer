@@ -57,7 +57,7 @@ def load_generated_images(images_folder):
 
     names = []
     for img_name in os.listdir(images_folder):
-        img = imread(os.path.join(images_folder, img_name))
+        img = imread(os.path.join(images_folder, img_name), plugin='matplotlib')
         w = 64  # h, w ,c
         input_images.append(img[:, :w])
         target_images.append(img[:, 2 * w:3 * w])
@@ -114,7 +114,7 @@ def test(generated_images_dir, annotations_file_test):
 
 
 if __name__ == "__main__":
-    generated_images_dir = '_generated'
+    generated_images_dir = 'generated_images'
     annotations_file_test = 'data/market/annotation-test.csv'
 
     test(generated_images_dir, annotations_file_test)
