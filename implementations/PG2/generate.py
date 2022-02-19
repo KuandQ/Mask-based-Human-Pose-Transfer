@@ -5,7 +5,7 @@ from .model import Generator2, Generator1
 
 def make_generator(config, device=torch.device("cuda")):
     cfg = config["model"]["generator1"]
-    generator1 = Generator1(3 + 18, cfg["num_repeat"], cfg["middle_features_dim"], cfg["channels_base"],
+    generator1 = Generator1(3 + 18 + 1, cfg["num_repeat"], cfg["middle_features_dim"], cfg["channels_base"],
                             cfg["image_size"])
     generator1.to(device)
     generator1.load_state_dict(torch.load(cfg["pretrained_path"], map_location="cpu"))

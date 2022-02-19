@@ -15,7 +15,7 @@ from .model import Generator1
 
 def get_trainer(config, device=torch.device("cuda")):
     cfg = config["model"]["generator1"]
-    generator1 = Generator1(4 + 18, cfg["num_repeat"], cfg["middle_features_dim"],
+    generator1 = Generator1(3 + 18 + 1, cfg["num_repeat"], cfg["middle_features_dim"],
                             cfg["channels_base"], cfg["image_size"])
     generator1.to(device)
     print(generator1)
@@ -29,7 +29,7 @@ def get_trainer(config, device=torch.device("cuda")):
 
     def _step(engine, batch):
         batch = convert_tensor(batch, device)
-        generated_img = generator1(batch["condition_img"], batch["target_mask2"], batch["target_bone"])
+        generated_img = generator1(batch["condition_img"], batch["target_bone"], batch["target_mask2"])
 
         generator1_optimizer.zero_grad()
         loss = mask_l1_loss(generated_img, batch["target_img"], batch["target_mask"])
