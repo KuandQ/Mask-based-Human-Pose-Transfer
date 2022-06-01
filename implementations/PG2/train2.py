@@ -51,7 +51,7 @@ def get_trainer(config, device=torch.device("cuda")):
 
         generator2_optimizer.zero_grad()
         g2_gan_loss = adversarial_loss(discriminator(generated_img), real_labels)
-        g2_mask_l1_loss = mask_l1_loss(generated_img, batch["target_img"], batch["target_mask"])
+        g2_mask_l1_loss = mask_l1_loss(generated_img, batch["target_img"], batch["target_mask2"])
         g2_loss = config["loss"]["mask_l1"]["weight"] * g2_mask_l1_loss + \
                   config["loss"]["gan"]["weight"] * g2_gan_loss
         g2_loss.backward()

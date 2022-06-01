@@ -41,7 +41,7 @@ def expand_key_points(key_points, radius=4):
     return new_points
 
 
-def key_point_to_mask(key_points, img_size, radius=6):
+"""def key_point_to_mask(key_points, img_size, radius=6):
     new_points = expand_key_points(key_points, radius)
     mask = np.zeros(shape=img_size, dtype=bool)
 
@@ -52,7 +52,7 @@ def key_point_to_mask(key_points, img_size, radius=6):
         mask[yy, xx] = True
     mask = dilation(mask, square(radius + 3))
     mask = erosion(mask, square(radius + 3))
-    return mask
+    return mask"""
 
 
 def key_point_to_map(key_points, img_size, sigma=6):

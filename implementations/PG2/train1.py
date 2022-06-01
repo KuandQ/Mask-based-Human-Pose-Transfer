@@ -32,7 +32,7 @@ def get_trainer(config, device=torch.device("cuda")):
         generated_img = generator1(batch["condition_img"], batch["target_bone"], batch["target_mask2"])
 
         generator1_optimizer.zero_grad()
-        loss = mask_l1_loss(generated_img, batch["target_img"], batch["target_mask"])
+        loss = mask_l1_loss(generated_img, batch["target_img"], batch["target_mask2"])
         loss.backward()
         generator1_optimizer.step()
         return {

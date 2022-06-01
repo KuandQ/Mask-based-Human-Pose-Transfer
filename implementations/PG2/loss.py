@@ -11,6 +11,6 @@ class MaskL1Loss(nn.Module):
         self.criterion = nn.L1Loss()
         self.ratio = ratio
 
-    def forward(self, generated_img, target_img, mask):
-        pose_mask_l1 = self.criterion(generated_img * mask, target_img * mask)
+    def forward(self, generated_img, target_img, mask2):
+        pose_mask_l1 = self.criterion(generated_img * mask2, target_img * mask2)
         return self.criterion(generated_img, target_img) + pose_mask_l1 * self.ratio
