@@ -20,7 +20,7 @@ first try
         mask2 = "./new_market1501-mask/bounding_box_test_seg/"
     #   mask2 = "./data/market1501-mask/bounding_box_test_seg/"
         bone = "./data/market/test/pose_map_image/"
-        mask = "./data/market/test/pose_mask_image/"
+    #   mask = "./data/market/test/pose_mask_image/"
         pair = "./data/market/pairs-test.csv"
     #   mask2pair ="./data/market/market-mask-test.csv"
         annotation = "./data/market/annotation-test.csv"
@@ -34,6 +34,7 @@ first try
     [model.generator1]
         num_repeat = 5
         middle_features_dim = 64
+        channels_base = 128
         channels_base = 128
         image_size = [128, 64]
 

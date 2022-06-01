@@ -36,7 +36,6 @@ class MaskPairBoneDataset(PairBoneDataset):
     flip_rate: {},
     image_folder: {},
     bone_folder: {},
-    mask_folder: {}
     mask2_folder: {}
     pair_list_path: {}
     mask2pair_list_path: {}
@@ -44,5 +43,5 @@ class MaskPairBoneDataset(PairBoneDataset):
 )
 
     """.format(self.__class__, len(self), self.flip_rate, self.image_folder,
-               self.bone_folder, self.mask_folder, self.mask2_folder, self.pair_list_path,
+               self.bone_folder, self.mask2_folder, self.pair_list_path,
                self.mask2pair_list_path, self.transform)
