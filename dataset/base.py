@@ -24,11 +24,10 @@ def wrap_dict_name(d, prefix):
 
 
 class BoneDataset(Dataset):
-    def __init__(self, image_folder, bone_folder, mask_folder, annotations_file_path, mask2_folder,
+    def __init__(self, image_folder, bone_folder, annotations_file_path, mask2_folder,
                  exclude_fields=None, flip_rate=0.0, loader=default_loader, transform=DEFAULT_TRANS):
         self.image_folder = image_folder
         self.bone_folder = bone_folder
-        self.mask_folder = mask_folder
         self.mask2_folder = mask2_folder
         self.flip_rate = flip_rate
         self.use_flip = self.flip_rate > 0.0
@@ -107,8 +106,6 @@ class BoneDataset(Dataset):
             item["mask2"] = self.load_mask2_data(self.mask2_folder, image_name, flip)
         if "bone" not in self.exclude_fields:
             item["bone"] = self.load_bone_data(self.bone_folder, image_name, flip)
-        if "mask" not in self.exclude_fields:
-            item["mask"] = self.load_mask_data(self.mask_folder, image_name, flip)
         if "key_points" not in self.exclude_fields:
             item["key_points"] = self.key_points[image_name]
         return item
