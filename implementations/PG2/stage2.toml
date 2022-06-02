@@ -10,14 +10,14 @@ first try
         image = "./data/Market-1501-v15.09.15/bounding_box_train/"
         bone = "./data/market/train/pose_map_image/"
         mask2 = "./new_market1501-mask/bounding_box_train_seg/"
-        mask = "./data/market/train/pose_mask_image/"
+    #   mask = "./data/market/train/pose_mask_image/"
         pair = "./data/market/pairs-train.csv"
         annotation = "./data/market/annotation-train.csv"
     [dataset.path.test]
         image = "./data/Market-1501-v15.09.15/bounding_box_test/"
         bone = "./data/market/test/pose_map_image/"
         mask2 = "./new_market1501-mask/bounding_box_test_seg/"
-        mask = "./data/market/test/pose_mask_image/"
+    #   mask = "./data/market/test/pose_mask_image/"
         pair = "./data/market/pairs-test.csv"
         annotation = "./data/market/annotation-test.csv"
 

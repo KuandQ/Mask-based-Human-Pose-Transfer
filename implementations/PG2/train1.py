@@ -89,7 +89,7 @@ def get_trainer(config, device=torch.device("cuda")):
         with torch.no_grad():
             generator1.eval()
             generated_img_1 = generator1(val_data_pair["condition_img"], val_data_pair["target_bone"], val_data_pair["target_mask2"])
-            output_imgs = [val_data_pair["target_mask"], val_data_pair["target_mask2"], val_data_pair["condition_img"],
+            output_imgs = [val_data_pair["target_mask2"], val_data_pair["condition_img"],
                            val_data_pair["target_img"], generated_img_1]
             tb_writer.add_image('Test/image', make_2d_grid(output_imgs), engine.state.iteration)
             generator1.train()
