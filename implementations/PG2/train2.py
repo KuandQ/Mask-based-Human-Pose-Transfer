@@ -80,7 +80,7 @@ def get_trainer(config, device=torch.device("cuda")):
                 "d_loss_2": d_loss_2.item(),
             },
             "img": {
-                "mask_img": batch["target_mask"].detach(),
+                "mask_img": batch["target_mask2"].detach(),
                 "condition_img": batch["condition_img"].detach(),
                 "target_img": batch["target_img"].detach(),
                 "generated_img_1": generated_img_1.detach(),
