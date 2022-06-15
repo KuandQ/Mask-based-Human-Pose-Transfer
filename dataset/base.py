@@ -65,14 +65,6 @@ class BoneDataset(Dataset):
             bone = bone.flip(dims=[-1])
         return bone
 
-    @staticmethod
-    def load_mask_data(mask_folder, img_name, flip=False):
-        mask = torch.as_tensor(numpy.load(os.path.join(mask_folder, img_name + ".npy")), dtype=torch.float)
-        if flip:
-            mask = mask.flip(dims=[-1])
-        mask = mask.unsqueeze(0).expand(3, -1, -1)
-        return mask
-
     def load_image_data(self, path, flip=False):
         try:
             img = self.loader(os.path.join(self.image_folder, path))
@@ -109,6 +101,7 @@ class BoneDataset(Dataset):
         if "key_points" not in self.exclude_fields:
             item["key_points"] = self.key_points[image_name]
         return item
+
 
     def __getitem__(self, input_idx):
         pass
