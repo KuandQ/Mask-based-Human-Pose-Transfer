@@ -216,6 +216,6 @@ dmypy.json
 
 # End of https://www.gitignore.io/api/python,pycharm+all
 
-/data
-/generated_images
-/generated_images_2
+/data/
+/generated_images/
+/generated_images_2/
