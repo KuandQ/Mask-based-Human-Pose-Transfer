@@ -219,5 +219,6 @@ dmypy.json
 /data
 /checkpoints
 /new_market1501-mask
+/evaluate/.models
 /generated_images
 /generated_images_2
